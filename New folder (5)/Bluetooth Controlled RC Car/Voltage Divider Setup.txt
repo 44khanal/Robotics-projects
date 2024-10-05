@@ -1,0 +1,115 @@
+Voltage Divider Setup:
+
+First Resistor (R1): Connect between Arduino TX (5V) and HC-05 RX.
+Second Resistor (R2): Connect between HC-05 RX and GND.
+
+How It Works:
+
+The voltage at the HC-05 RX pin (Vout) depends on the values of R1 and R2.
+The formula for the output voltage (Vout) is:
+𝑉
+𝑜
+𝑢
+𝑡
+=
+𝑉
+𝑖
+𝑛
+×
+(
+𝑅
+2
+𝑅
+1
++
+𝑅
+2
+)
+V 
+out
+​
+ =V 
+in
+​
+ ×( 
+R1+R2
+R2
+​
+ )
+In this case, 
+𝑉
+𝑖
+𝑛
+V 
+in
+​
+  is 5V from the Arduino.
+Using 1kΩ and 2kΩ Resistors:
+
+R1 = 1kΩ
+R2 = 2kΩ
+Plugging into the formula:
+
+𝑉
+𝑜
+𝑢
+𝑡
+=
+5
+𝑉
+×
+(
+2
+𝑘
+Ω
+1
+𝑘
+Ω
++
+2
+𝑘
+Ω
+)
+V 
+out
+​
+ =5V×( 
+1kΩ+2kΩ
+2kΩ
+​
+ )
+
+𝑉
+𝑜
+𝑢
+𝑡
+=
+5
+𝑉
+×
+(
+2
+3
+)
+=
+3.33
+𝑉
+V 
+out
+​
+ =5V×( 
+3
+2
+​
+ )=3.33V
+This gives a safe voltage level for the HC-05 RX pin, which operates at 3.3V.
+
+Step-by-Step Connection:
+Resistor R1 (1kΩ):
+
+Connect one end to the Arduino TX pin.
+Connect the other end to the HC-05 RX pin.
+Resistor R2 (2kΩ):
+
+Connect one end to the HC-05 RX pin (same point where R1 connects).
+Connect the other end to GND.

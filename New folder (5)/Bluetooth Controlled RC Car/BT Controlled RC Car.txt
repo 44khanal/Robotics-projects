@@ -1,0 +1,70 @@
+char t = 'S';  // Default state to STOP
+char lastCommand = 'S';
+unsigned long lastTime = 0;
+const unsigned long debounceDelay = 50;  // 50 milliseconds
+
+void setup() {
+  pinMode(13, OUTPUT);   // left motors forward
+  pinMode(12, OUTPUT);   // left motors reverse
+  pinMode(11, OUTPUT);   // right motors forward
+  pinMode(10, OUTPUT);   // right motors reverse
+  pinMode(9, OUTPUT);    // LED
+
+  // Ensure all motors are off at the start
+  digitalWrite(13, LOW);
+  digitalWrite(12, LOW);
+  digitalWrite(11, LOW);
+  digitalWrite(10, LOW);
+  digitalWrite(9, LOW);  // LED off
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available()) {
+    char newCommand = Serial.read();
+    unsigned long currentTime = millis();
+
+    if (newCommand != lastCommand && (currentTime - lastTime) > debounceDelay) {
+      t = newCommand;
+      Serial.println(t);
+      lastCommand = newCommand;
+      lastTime = currentTime;
+    }
+  }
+
+  // Ensure all motors are off before setting a new command
+  digitalWrite(13, LOW);
+  digitalWrite(12, LOW);
+  digitalWrite(11, LOW);
+  digitalWrite(10, LOW);
+
+  switch (t) {
+    case 'F': // Move forward
+      digitalWrite(13, HIGH);
+      digitalWrite(11, HIGH);
+      break;
+    case 'B': // Move reverse
+      digitalWrite(12, HIGH);
+      digitalWrite(10, HIGH);
+      break;
+    case 'L': // Turn right
+      digitalWrite(13, HIGH);
+      break;
+    case 'R': // Turn left
+      digitalWrite(11, HIGH);
+      break;
+    case 'W': // Turn LED on
+      digitalWrite(9, HIGH);
+      break;
+    case 'w': // Turn LED off
+      digitalWrite(9, LOW);
+      break;
+    case 'S': // STOP
+    default:
+      // All motors are already set to LOW at the start of the loop
+      break;
+  }
+
+  delay(100);
+}
